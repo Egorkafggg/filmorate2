@@ -18,7 +18,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/film")
-public class FilmController { 
+public class FilmController {
 
     //private final static Logger log = LoggerFactory.getLogger(FilmController.class);
     private final Map<Long, Film> films = new HashMap<>();
@@ -27,15 +27,15 @@ public class FilmController {
 
 
     @PostMapping
-    public Film create(@Valid @RequestBody Film film){ 
+    public Film create(@Valid @RequestBody Film film){
         film.setId(++generateId);
         films.put(film.getId(), film);
         log.info("Добавлен фильм {}",film);
         return film;
-    } 
+    }
 
     @PutMapping
-    public Film upFilm(@Valid@RequestBody Film film){ 
+    public Film upFilm(@Valid@RequestBody Film film){
         if (film.getId() == 0 || films.containsKey(film.getId())){
             log.warn("Попытка обновления не существующего фильма",film.getId());
             throw new ValidateException("Фильм с Id " + film.getId() + " не найден");
@@ -43,7 +43,7 @@ public class FilmController {
         films.put(film.getId(), film);
         log.info("Обновлен фильм {}",film.getId());
         return film;
-    } 
+    }
 
     @GetMapping
     public Collection<Film> listFilms(){ 
